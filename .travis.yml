@@ -67,3 +67,13 @@ notifications:
 env:
   global:
     - TMPDIR=$HOME/.slimerjs-cache
+
+addons:
+  coverity_scan:
+    project:
+      name: "blackbaud/skyux"
+      description: "Blackbaud Sky UX"
+    notification_email: sky-build-user@blackbaud.com
+    build_command_prepend: ""
+    build_command:   ""
+    branch_pattern: coverity-scan
