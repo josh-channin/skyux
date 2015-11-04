@@ -45,6 +45,7 @@ branches:
     - master
     - /^rc-.*$/
     - /^savage-.*$/
+    - coverity-scan
 
 # Cache a few things
 cache:
