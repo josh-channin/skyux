@@ -199,6 +199,13 @@ describe('Data service', function () {
 
             expect(urlWithQuery).toBe('/foo/search?x=y&z=123');
         });
+        it('should create a traditional query string based on the object\'s propertties', function () {
+            var queryA = bbData.query('/foo/search', {a: ['b', 'c'], x: 'y', z: 123}),
+                queryB = bbData.query('/foo/search', {a: ['b', 'c'], x: 'y', z: 123}, true);
+
+            expect(queryA).toBe('/foo/search?a%5B%5D=b&a%5B%5D=c&x=y&z=123');
+            expect(queryB).toBe('/foo/search?a=b&a=c&x=y&z=123');
+        });
     });
 
     describe('post() method', function () {

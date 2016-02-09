@@ -414,8 +414,8 @@
                 return loadData(options);
             },
             loadManager: loadManager,
-            query: function (url, params) {
-                return url + '?' + $.param(params);
+            query: function (url, params, traditional) {
+                return url + '?' + $.param(params, traditional);
             },
             post: function (url, data) {
                 return {
