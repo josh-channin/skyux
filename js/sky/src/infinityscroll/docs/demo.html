@@ -1,0 +1,15 @@
+<div ng-controller="InfinityScrollDemoController as infinityCtrl">
+  <div style="height: 300px;" ng-repeat="item in infinityCtrl.data">
+      <div>
+        {{item.name}}
+      </div>
+      <div>
+        {{item.description}}
+      </div>
+  </div>
+  <bb-infinity-scroll
+    bb-infinity-scroll-has-more="infinityCtrl.hasMore"
+    bb-infinity-scroll-is-loading="infinityCtrl.loading"
+    bb-infinity-scroll-load="infinityCtrl.loadFn()">
+  </bb-infinity-scroll>
+</div>

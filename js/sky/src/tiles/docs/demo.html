@@ -8,7 +8,11 @@
         </div>
     </div>
     <div style="background-color: #f2f2f2; margin-top: 15px; padding: 15px">
-        <bb-tile-dashboard bb-layout="tileCtrl.layout" bb-tiles="tileCtrl.tiles" bb-tile-dashboard-all-collapsed="tileCtrl.allCollapsed"></bb-tile-dashboard>
+        <bb-tile-dashboard bb-layout="tileCtrl.layout"
+          bb-tiles="tileCtrl.tiles"
+          bb-tile-dashboard-all-collapsed="tileCtrl.allCollapsed"
+          bb-tile-dashboard-has-infinity-scroll="true">
+        </bb-tile-dashboard>
     </div>
 </div>
 
@@ -18,7 +22,9 @@
             {{123456789 | bbAutonumeric:'money':true}}
         </bb-tile-header-content>
         <div bb-tile-section>
+          <div style="height: 300px">
             Test.
+            </div>
         </div>
     </bb-tile>
 </script>
@@ -29,7 +35,113 @@
             <bb-tile-header-check></bb-tile-header-check>
         </bb-tile-header-content>
         <div bb-tile-section>
+            <div style="height:300px;">
             Test 2.
+            </div>
+        </div>
+    </bb-tile>
+</script>
+
+<script type="text/ng-template" id="demo/tile/tile3.html">
+    <bb-tile bb-tile-header="'Tile 3'">
+        <bb-tile-header-content>
+            <bb-tile-header-check></bb-tile-header-check>
+        </bb-tile-header-content>
+        <div bb-tile-section>
+            <div style="height:300px;">
+            Test 3.
+            </div>
+        </div>
+    </bb-tile>
+</script>
+
+<script type="text/ng-template" id="demo/tile/tile4.html">
+    <bb-tile bb-tile-header="'Tile 4'">
+        <bb-tile-header-content>
+            <bb-tile-header-check></bb-tile-header-check>
+        </bb-tile-header-content>
+        <div bb-tile-section>
+            <div style="height:300px;">
+            Test 4.
+            </div>
+        </div>
+    </bb-tile>
+</script>
+
+<script type="text/ng-template" id="demo/tile/tile5.html">
+    <bb-tile bb-tile-header="'Tile 5'">
+        <bb-tile-header-content>
+            <bb-tile-header-check></bb-tile-header-check>
+        </bb-tile-header-content>
+        <div bb-tile-section>
+            <div style="height:300px;">
+            Test 5.
+            </div>
+        </div>
+    </bb-tile>
+</script>
+
+<script type="text/ng-template" id="demo/tile/tile6.html">
+    <bb-tile bb-tile-header="'Tile 6'">
+        <bb-tile-header-content>
+            <bb-tile-header-check></bb-tile-header-check>
+        </bb-tile-header-content>
+        <div bb-tile-section>
+            <div style="height:300px;">
+            Test 6.
+            </div>
+        </div>
+    </bb-tile>
+</script>
+
+<script type="text/ng-template" id="demo/tile/tile7.html">
+    <bb-tile bb-tile-header="'Tile 7'">
+        <bb-tile-header-content>
+            <bb-tile-header-check></bb-tile-header-check>
+        </bb-tile-header-content>
+        <div bb-tile-section>
+            <div style="height:300px;">
+            Test 7.
+            </div>
+        </div>
+    </bb-tile>
+</script>
+
+<script type="text/ng-template" id="demo/tile/tile8.html">
+    <bb-tile bb-tile-header="'Tile 8'">
+        <bb-tile-header-content>
+            <bb-tile-header-check></bb-tile-header-check>
+        </bb-tile-header-content>
+        <div bb-tile-section>
+            <div style="height:300px;">
+            Test 8.
+            </div>
+        </div>
+    </bb-tile>
+</script>
+
+<script type="text/ng-template" id="demo/tile/tile9.html">
+    <bb-tile bb-tile-header="'Tile 9'">
+        <bb-tile-header-content>
+            <bb-tile-header-check></bb-tile-header-check>
+        </bb-tile-header-content>
+        <div bb-tile-section>
+            <div style="height:300px;">
+            Test 9.
+            </div>
+        </div>
+    </bb-tile>
+</script>
+
+<script type="text/ng-template" id="demo/tile/tile10.html">
+    <bb-tile bb-tile-header="'Tile 10'">
+        <bb-tile-header-content>
+            <bb-tile-header-check></bb-tile-header-check>
+        </bb-tile-header-content>
+        <div bb-tile-section>
+            <div style="height:300px;">
+            Test 10.
+            </div>
         </div>
     </bb-tile>
 </script>

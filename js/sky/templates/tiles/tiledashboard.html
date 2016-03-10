@@ -1,9 +1,20 @@
-<div class="row">
-  <div class="col-md-6 bb-page-content-tile-column bb-page-content-tile-column-sortable" data-dashboard-column="1">
-    <div ng-repeat="tile in bbTileDashboard.tiles" data-tile-id="{{tile.id}}" data-ui-view="{{tile.view_name}}" id="{{tile.view_name}}">
+<div>
+  <div class="row">
+    <div style="display: none;">
+      <div ng-repeat="tile in bbTileDashboard.tiles" data-tile-id="{{tile.id}}" data-ui-view="{{tile.view_name}}" id="{{tile.view_name}}">
+      </div>
+    </div>
+
+    <div class="col-md-6 bb-page-content-tile-column bb-page-content-tile-column-sortable" data-dashboard-column="1">
+    </div>
+
+    <div class="col-md-6 bb-page-content-tile-column bb-page-content-tile-column-sortable" data-dashboard-column="2">
     </div>
   </div>
-
-  <div class="col-md-6 bb-page-content-tile-column bb-page-content-tile-column-sortable" data-dashboard-column="2">
-  </div>
+  <bb-infinity-scroll
+    ng-if="bbTileDashboard.hasInfinityScroll"
+    bb-infinity-scroll-has-more="bbTileDashboard.moreTilesAvailable()"
+    bb-infinity-scroll-is-loading="bbTileDashboard.tilesAreLoading"
+    bb-infinity-scroll-load="bbTileDashboard.loadMoreTiles()">
+  </bb-infinity-scroll>
 </div>

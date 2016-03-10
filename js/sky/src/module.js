@@ -22,6 +22,7 @@
         'sky.help',
         'sky.helpbutton',
         'sky.highlight',
+        'sky.infinityscroll',
         'sky.mediabreakpoints',
         'sky.modal',
         'sky.moment',

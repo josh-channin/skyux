@@ -6,11 +6,13 @@
 
     //Removes the specified tiles from the source container and appends them
     //in the specified order to the target container.
-    function moveTilesToContainer(sourceContainer, targetContainer, tiles) {
-        angular.forEach(tiles, function (tileId) {
-            var tile = sourceContainer.find('[data-tile-id="' + tileId + '"]');
+    function moveTilesToContainer(sourceContainer, targetContainer, tiles, startNdx, numberOfTiles) {
+        var i,
+            tile;
+        for (i = startNdx; i < tiles.length && i < startNdx + numberOfTiles && i > -1; i++) {
+            tile = sourceContainer.find('[data-tile-id="' + tiles[i] + '"]');
             targetContainer.append(tile);
-        });
+        }
     }
 
     //Returns an array of tile names in the order they appear in the specified container.
@@ -251,6 +253,19 @@
             });
         };
 
+        function moreTilesAvailable() {
+            if (vm.layout) {
+                if (vm.singleColumnMode) {
+                    return vm.numTilesVisible < vm.layout.one_column_layout.length;
+
+                } else {
+                    return vm.numTilesVisible < vm.layout.two_column_layout[0].length && vm.numTilesVisible < vm.layout.two_column_layout[1].length;
+                }
+            }
+        }
+
+        vm.moreTilesAvailable = moreTilesAvailable;
+
         vm.dashboardInitialized = false;
         vm.smallTileDisplayMode = false;
 
@@ -259,6 +274,7 @@
         $scope.$watch(function () {
             return vm.tiles;
         }, function () {
+            vm.numTilesVisible = 2;
             $timeout(function () {
                 vm.layoutTileColumns();
                 $scope.$broadcast('tilesInitialized', {
@@ -300,32 +316,59 @@
         function link($scope, element, attrs, vm) {
             var column1 = element.find('[data-dashboard-column="1"]'),
                 column2 = element.find('[data-dashboard-column="2"]'),
-                singleColumnMode = false,
                 sortableOptions;
 
+            vm.singleColumnMode = false;
             //Layouts out the tiles based on the current one column or two column configuration
             function layoutTileColumns() {
                 var layout = vm.layout;
+                vm.tilesAreLoading = true;
 
                 if (layout) {
-                    if (singleColumnMode) {
-                        moveTilesToContainer(element, column1, layout.one_column_layout);
+                    if (vm.hasInfinityScroll) {
+                        vm.numTilesVisible = 2;
                     } else {
-                        moveTilesToContainer(element, column1, layout.two_column_layout[0]);
-                        moveTilesToContainer(element, column2, layout.two_column_layout[1]);
+                        vm.numTilesVisible = layout.one_column_layout.length;
                     }
+                    if (vm.singleColumnMode) {
+                        moveTilesToContainer(element, column1, layout.one_column_layout, 0, vm.numTilesVisible);
+                    } else {
+                        moveTilesToContainer(element, column1, layout.two_column_layout[0], 0, vm.numTilesVisible);
+                        moveTilesToContainer(element, column2, layout.two_column_layout[1], 0, vm.numTilesVisible);
+                    }
+
+                    vm.numTilesVisible = vm.numTilesVisible + 2;
                 }
+                vm.tilesAreLoading = false;
             }
 
-            vm.layoutTileColumns = layoutTileColumns;
+            function loadMoreTiles() {
+                var layout = vm.layout;
 
+                vm.tilesAreLoading = true;
+
+                if (layout) {
+                    if (vm.singleColumnMode) {
+                        moveTilesToContainer(element, column1, layout.one_column_layout, vm.numTilesVisible - 1, 2);
+                    } else {
+                        moveTilesToContainer(element, column1, layout.two_column_layout[0], vm.numTilesVisible - 1, 2);
+                        moveTilesToContainer(element, column2, layout.two_column_layout[1], vm.numTilesVisible - 1, 2);
+                    }
+                }
+                vm.numTilesVisible = vm.numTilesVisible + 2;
+                vm.tilesAreLoading = false;
+            }
+
+            vm.loadMoreTiles = loadMoreTiles;
+
+            vm.layoutTileColumns = layoutTileColumns;
 
             //Inspects the tiles in each column and updates model accordingly.
             function parseColumnTiles() {
                 $scope.$apply(function () {
                     var layout = vm.layout;
 
-                    if (singleColumnMode) {
+                    if (vm.singleColumnMode) {
                         layout.one_column_layout = parseTileOrder(column1);
                     } else {
                         layout.two_column_layout[0] = parseTileOrder(column1);
@@ -335,10 +378,10 @@
             }
 
             function mediabreakpointChangeHandler(breakPoints) {
-                singleColumnMode = (breakPoints.xs || breakPoints.sm);
+                vm.singleColumnMode = (breakPoints.xs || breakPoints.sm);
                 vm.layoutTileColumns();
 
-                if (singleColumnMode) {
+                if (vm.singleColumnMode) {
                     element.removeClass('bb-page-content-multicolumn');
                     column2.hide();
                 } else {
@@ -415,7 +458,8 @@
             bindToController: {
                 tiles: '=bbTiles',
                 layout: '=bbLayout',
-                allCollapsed: '=bbTileDashboardAllCollapsed'
+                allCollapsed: '=bbTileDashboardAllCollapsed',
+                hasInfinityScroll: '=bbTileDashboardHasInfinityScroll'
             },
             scope: {},
             link: link,
@@ -427,7 +471,7 @@
 
     bbTileDashboard.$inject = ['$timeout', 'bbMediaBreakpoints'];
 
-    angular.module('sky.tiles', ['sky.mediabreakpoints'])
+    angular.module('sky.tiles', ['sky.mediabreakpoints', 'sky.infinityscroll'])
         .directive('bbTile', bbTile)
         .directive('bbTileHeaderContent', bbTileHeaderContent)
         .directive('bbTileHeaderCheck', bbTileHeaderCheck)

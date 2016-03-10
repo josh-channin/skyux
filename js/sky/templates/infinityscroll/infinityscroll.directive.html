@@ -1,0 +1,5 @@
+<div class="bb-infinity-scroll" ng-if="bbInfinityScroll.hasMore">
+  <button type="button" class="btn bb-btn-secondary" ng-if="!bbInfinityScroll.isLoading" ng-click="bbInfinityScroll.loadingCallback()">Load more</button>
+  <div bb-wait="bbInfinityScroll.isLoading">
+  </div>
+</div>
