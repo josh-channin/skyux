@@ -12,39 +12,39 @@
                     templateUrl: 'demo/tile/tile1.html'
                 },
                 'tile2': {
-                    controller: 'Tile2Controller',
+                    controller: 'Tile2Controller as tile2Ctrl',
                     templateUrl: 'demo/tile/tile2.html'
                 },
                 'tile3': {
-                    controller: 'Tile3Controller',
+                    controller: 'Tile3Controller as tile3Ctrl',
                     templateUrl: 'demo/tile/tile3.html'
                 },
                 'tile4': {
-                    controller: 'Tile4Controller',
+                    controller: 'Tile4Controller as tile4Ctrl',
                     templateUrl: 'demo/tile/tile4.html'
                 },
                 'tile5': {
-                    controller: 'Tile5Controller',
+                    controller: 'Tile5Controller as tile5Ctrl',
                     templateUrl: 'demo/tile/tile5.html'
                 },
                 'tile6': {
-                    controller: 'Tile6Controller',
+                    controller: 'Tile6Controller as tile6Ctrl',
                     templateUrl: 'demo/tile/tile6.html'
                 },
                 'tile7': {
-                    controller: 'Tile7Controller',
+                    controller: 'Tile7Controller as tile7Ctrl',
                     templateUrl: 'demo/tile/tile7.html'
                 },
                 'tile8': {
-                    controller: 'Tile8Controller',
+                    controller: 'Tile8Controller as tile8Ctrl',
                     templateUrl: 'demo/tile/tile8.html'
                 },
                 'tile9': {
-                    controller: 'Tile9Controller',
+                    controller: 'Tile9Controller as tile9Ctrl',
                     templateUrl: 'demo/tile/tile9.html'
                 },
                 'tile10': {
-                    controller: 'Tile10Controller',
+                    controller: 'Tile10Controller as tile10Ctrl',
                     templateUrl: 'demo/tile/tile10.html'
                 }
             }
@@ -62,6 +62,18 @@
             alert('Settings invoked!');
         };
     }
+
+    function TileController($timeout) {
+        var self = this;
+
+        self.loading = true;
+
+        $timeout(function () {
+            self.loading = false;
+        }, 3000);
+    }
+
+    TileController.$inject = ['$timeout'];
 
     function TileTestController(bbModal) {
         var self = this;
@@ -205,13 +217,13 @@
     .config(TileDashboardConfig)
     .controller('TileTestController', TileTestController)
     .controller('Tile1Controller', Tile1Controller)
-    .controller('Tile2Controller', angular.noop)
-    .controller('Tile3Controller', angular.noop)
-    .controller('Tile4Controller', angular.noop)
-    .controller('Tile5Controller', angular.noop)
-    .controller('Tile6Controller', angular.noop)
-    .controller('Tile7Controller', angular.noop)
-    .controller('Tile8Controller', angular.noop)
-    .controller('Tile9Controller', angular.noop)
-    .controller('Tile10Controller', angular.noop);
+    .controller('Tile2Controller', TileController)
+    .controller('Tile3Controller', TileController)
+    .controller('Tile4Controller', TileController)
+    .controller('Tile5Controller', TileController)
+    .controller('Tile6Controller', TileController)
+    .controller('Tile7Controller', TileController)
+    .controller('Tile8Controller', TileController)
+    .controller('Tile9Controller', TileController)
+    .controller('Tile10Controller', TileController);
 }());

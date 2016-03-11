@@ -143,6 +143,7 @@
                         //retrieve the tile id from the parent container
                         vm.tileId = el.parent().attr('data-tile-id') || /*istanbul ignore next: default value */ '';
                         vm.smallTileDisplayMode = data.smallTileDisplayMode || false;
+                        applyLoadingToDashboard(vm.bbTileLoading, vm.tileId);
                     }
 
                     vm.updateTileState(tiles);
@@ -178,6 +179,26 @@
                     dashboardCtrl.layoutTiles();
                 }
             }
+
+            function applyLoadingToDashboard(isLoading, tileId) {
+                var index;
+                if (dashboardCtrl !== null && tileId) {
+                    index = dashboardCtrl.loadingTiles.indexOf(tileId);
+                    if (isLoading && index === -1) {
+                        dashboardCtrl.loadingTiles.push(tileId);
+                    } else if (!isLoading && index !== -1) {
+                        dashboardCtrl.loadingTiles.splice(index, 1);
+                    }
+                }
+            }
+
+            if (attrs.bbTileLoading) {
+                $scope.$watch(function () {
+                    return vm.bbTileLoading;
+                }, function (newValue) {
+                    applyLoadingToDashboard(newValue, vm.tileId);
+                });
+            }
         }
         return {
             link: link,
@@ -190,7 +211,8 @@
             bindToController: {
                 bbTileCollapsed: '=?',
                 bbTileSettingsClick: '&?',
-                tileHeader: '=bbTileHeader'
+                tileHeader: '=bbTileHeader',
+                bbTileLoading: '=?'
             },
             templateUrl: 'sky/templates/tiles/tile.html',
             transclude: true
@@ -269,6 +291,8 @@
         vm.dashboardInitialized = false;
         vm.smallTileDisplayMode = false;
 
+        vm.loadingTiles = [];
+
         vm.fireDisplayModeChanged = fireDisplayModeChanged;
 
         $scope.$watch(function () {
@@ -322,7 +346,7 @@
             //Layouts out the tiles based on the current one column or two column configuration
             function layoutTileColumns() {
                 var layout = vm.layout;
-                vm.tilesAreLoading = true;
+                vm.tilesAreAppending = true;
 
                 if (layout) {
                     if (vm.hasInfinityScroll) {
@@ -339,13 +363,13 @@
 
                     vm.numTilesVisible = vm.numTilesVisible + 2;
                 }
-                vm.tilesAreLoading = false;
+                vm.tilesAreAppending = false;
             }
 
             function loadMoreTiles() {
                 var layout = vm.layout;
 
-                vm.tilesAreLoading = true;
+                vm.tilesAreAppending = true;
 
                 if (layout) {
                     if (vm.singleColumnMode) {
@@ -356,9 +380,14 @@
                     }
                 }
                 vm.numTilesVisible = vm.numTilesVisible + 2;
-                vm.tilesAreLoading = false;
+                vm.tilesAreAppending = false;
             }
 
+            function tilesAreLoading() {
+                return vm.tilesAreAppending || vm.loadingTiles.length > 0;
+            }
+
+            vm.tilesAreLoading = tilesAreLoading;
             vm.loadMoreTiles = loadMoreTiles;
 
             vm.layoutTileColumns = layoutTileColumns;
