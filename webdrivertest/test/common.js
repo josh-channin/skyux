@@ -10,6 +10,8 @@
 
         if (browser.desiredCapabilities.os === 'OS X') {
             platform = 'MAC';
+        } else {
+            platform = 'WIN'
         }
 
         return platform + '_' + browserName;
@@ -21,9 +23,16 @@
 
     function checkAccessibility(options) {
         options.browserResult.executeAsync(function (done) {
-            axe.a11yCheck(document, function (results) {
-                done(results);
-            });
+            axe.a11yCheck(
+                document, 
+                {
+                    "rules": {
+                        "color-contrast": { enabled: false }
+                    }
+                },
+                function (results) {
+                    done(results);
+                });
         }).then(function (ret) {
             var i,
                 j,
