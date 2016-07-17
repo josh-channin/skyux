@@ -1,5 +1,10 @@
-scss_files: './scss/*'
-
+scss_files: 'scss/**/'
+exclude:
+  - 'scss/Bootstrap/**'
+  - 'scss/images/**'
+  - 'scss/fonts/**'
+  - 'scss/compass/**'
+  - 'scss/animation/**'
 linters:
   ImportPath:
     enabled: false

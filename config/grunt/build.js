@@ -214,6 +214,17 @@ module.exports = function (grunt, env, utils) {
                 src: ['js/sky/linter/skylint.js'],
                 dest: '<%= skyux.paths.dist %>js/skylint.min.js'
             }
+        },
+        scsslint: {
+          allFiles: [
+            'scss/**',
+          ],
+          options: {
+            //vbundleExec: false,
+            config: '.scss-lint.yml',
+            // reporterOutput: 'scss-lint-report.xml',
+            colorizeOutput: true
+          },
         }
     });
 
@@ -367,4 +378,6 @@ module.exports = function (grunt, env, utils) {
 
     // Main build task
     grunt.registerTask('build', ['styles', 'scripts', 'sri', 'generateIndexJs']);
+    // scss lint
+    grunt.registerTask('scsslint', ['scsslint']);
 };
