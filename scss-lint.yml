@@ -1,0 +1,15 @@
+scss_files: '/scss'
+
+linters:
+  ImportPath:
+    enabled: false
+  Indentation:
+    width: 4
+  PropertySortOrder:
+    enabled: false
+  SelectorFormat:
+    class_convention: 'bb\-membership\-[a-z0-9]+(\-[a-z0-9]+)*'
+  FinalNewline:
+    enabled: false
+  StringQuotes:
+    style: double_quotes
