@@ -44,6 +44,7 @@
     "grunt-jscs": "2.8.0",
     "grunt-karma": "0.12.2",
     "grunt-ngdocs": "0.2.9",
+    "grunt-scss-lint": "^0.3.8",
     "grunt-sri": "0.0.5",
     "grunt-webdriver": "1.0.0",
     "install": "0.6.0",
