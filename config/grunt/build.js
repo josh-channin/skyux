@@ -223,7 +223,8 @@ module.exports = function (grunt, env, utils) {
             //vbundleExec: false,
             config: '.scss-lint.yml',
             // reporterOutput: 'scss-lint-report.xml',
-            colorizeOutput: true
+            colorizeOutput: false,
+            compact: true
           },
         }
     });
