@@ -5,6 +5,7 @@ exclude:
   - 'scss/fonts/**'
   - 'scss/compass/**'
   - 'scss/animation/**'
+  - 'scss/FontAwesome/**'
 linters:
   ImportPath:
     enabled: false
@@ -12,8 +13,6 @@ linters:
     width: 4
   PropertySortOrder:
     enabled: false
-  SelectorFormat:
-    class_convention: 'bb\-membership\-[a-z0-9]+(\-[a-z0-9]+)*'
   FinalNewline:
     enabled: false
   StringQuotes:
