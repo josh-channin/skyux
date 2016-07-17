@@ -377,8 +377,10 @@ module.exports = function (grunt, env, utils) {
         });
     });
 
+    // scss lint task
+    grunt.registerTask('scsslint', ['scsslint']);
+
     // Main build task
     grunt.registerTask('build', ['styles', 'scripts', 'sri', 'generateIndexJs']);
-    // scss lint
-    grunt.registerTask('scsslint', ['scsslint']);
+
 };
